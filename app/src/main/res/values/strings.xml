@@ -3,4 +3,7 @@
     <string name="view_holder_fromvalue_title">From: </string>
     <string name="view_holder_tovalue_title">To:</string>
     <string name="view_holder_conversionrate_title">Conversion rate:</string>
+    <string name="dialog_default_error_message">An unexpected error has occurred</string>
+    <string name="dialog_default_error_action">OK</string>
+    <string name="dialog_default_loading_message">Loading Transactions</string>
 </resources>
