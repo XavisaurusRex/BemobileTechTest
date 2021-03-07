@@ -1,4 +1,4 @@
-package cat.devsofthecoast.bemobiletechtest.di.app
+package cat.devsofthecoast.bemobiletechtest.common.di.app
 
 import dagger.Module
 import dagger.hilt.InstallIn
