@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionsDashboardBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.TransactionsAdapter
@@ -20,7 +21,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
 
     lateinit var binding: FragmentTransactionsDashboardBinding
 
-    private val viewModelTransactions: TransactionsDashboardViewModel by viewModels()
+    private val viewModel: TransactionsDashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +30,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
     ): View {
         binding = FragmentTransactionsDashboardBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = viewModelTransactions
+        binding.viewmodel = viewModel
         return binding.root
     }
 
@@ -39,12 +40,15 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
     }
 
     private fun setUpObservers() {
-        viewModelTransactions.transactions.observe(::getLifecycle) { showMovements(it) }
+        viewModel.apiTransaction.observe(::getLifecycle) { observeTransactions(it) }
     }
 
-    private fun showMovements(transactions: List<TransactionDataWrapper>?) {
-        transactions?.let {
-            binding.rcyTransactions.adapter = TransactionsAdapter(this, it)
+    private fun observeTransactions(transactionsResult: AsyncResult<List<TransactionDataWrapper>>) {
+        val transactions =
+            transactionsResult.data.takeIf { transactionsResult.status == AsyncResult.Status.SUCCESS }
+        transactions?.let { dataWrappers ->
+            binding.rcyTransactions.adapter = TransactionsAdapter(this, dataWrappers)
+
         }
     }
 

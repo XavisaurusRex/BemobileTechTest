@@ -1,4 +1,4 @@
-package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.model
+package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
