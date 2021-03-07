@@ -1,10 +1,10 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.usecase.impl
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionsMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
@@ -13,13 +13,14 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.m
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.usecase.RequestTransactionsToEurUseCase
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 class RequestTransactionsToEurUseCaseImpl @Inject constructor(
-    private val repository: TransactionRepository
+    private val repository: TransactionRepository,
+    private val transactionsMapper: TransactionsMapper
 ) : RequestTransactionsToEurUseCase {
 
     @InternalCoroutinesApi
@@ -27,25 +28,32 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
         return repository.getConverionRates().flow()
             .combine(
                 repository.getTransactions().flow()
-            ) { conversionRates,
-                transactions ->
+            ) { resultConversionRates,
+                resultTransactions ->
 
                 var result: AsyncResult<List<TransactionDataWrapper>> = AsyncResult.loading()
 
                 // TODO: 3/7/21 IMPROVE CONDITIONS
 
-                isAnyError(conversionRates, transactions)?.let {
+                isAnyError(resultConversionRates, resultTransactions)?.let {
                     result = AsyncResult.error(it)
                 }
 
                 areSuccess(
-                    conversionRates,
-                    transactions
+                    resultConversionRates,
+                    resultTransactions
                 ) { list: List<ApiConversionRate>, list1: List<ApiTransaction> ->
-                    result = calculateTransactionConversionRates(list, list1)
+                    result = AsyncResult.success(transactionsMapper.mapToBo(list to list1))
                 }
 
                 result
+            }.catch {
+                AsyncResult.error<List<TransactionDataWrapper>>(
+                    AsyncError.UnknownError(
+                        "Error RequestTransactionsToEurUseCase",
+                        it
+                    )
+                )
             }.asLiveData(coroutineContext)
     }
 
@@ -74,28 +82,4 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
         }
     }
 
-    private fun calculateTransactionConversionRates(
-        list: List<ApiConversionRate>,
-        list1: List<ApiTransaction>
-    ): AsyncResult<List<TransactionDataWrapper>> {
-        // TODO: 3/7/21 LA FUNCION TOCHISSIMA QUE DESFRAGMENTAR EN OTRA CLASSE
-        val transactionDataWrappers = arrayListOf<TransactionDataWrapper>()
-        list1.forEach { apiTransaction ->
-
-            transactionDataWrappers.add(
-                TransactionDataWrapper(
-                    TransactionDetails(
-                        "${apiTransaction.skuStockRef} ${apiTransaction.amount} ${apiTransaction.currency}",
-                        0.0,
-                        Currency.USD,
-                        0.0,
-                        Currency.USD,
-                        1.0
-                    )
-                )
-            )
-        }
-
-        return AsyncResult.success(transactionDataWrappers)
-    }
 }

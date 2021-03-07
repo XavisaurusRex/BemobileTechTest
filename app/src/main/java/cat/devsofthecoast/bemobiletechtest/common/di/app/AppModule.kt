@@ -1,9 +1,9 @@
 package cat.devsofthecoast.bemobiletechtest.common.di.app
 
-import android.content.Context
-import cat.devsofthecoast.bemobiletechtest.App
 import cat.devsofthecoast.bemobiletechtest.BuildConfig
 import cat.devsofthecoast.bemobiletechtest.common.domain.AppDispatchers
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionsMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.TransactionsMapperImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.remote.TransactionsRemoteDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.remote.impl.TransactionsRemoteDataSourceImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
@@ -13,8 +13,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
@@ -36,6 +34,11 @@ abstract class AppModule {
     abstract fun transactionsRemoteDataSource(
         transactionsRemoteDataSourceImpl: TransactionsRemoteDataSourceImpl
     ): TransactionsRemoteDataSource
+
+    @Binds
+    abstract fun transactionMapper(
+        transactionsMapperImpl: TransactionsMapperImpl
+    ): TransactionsMapper
 
     companion object {
         @Provides
