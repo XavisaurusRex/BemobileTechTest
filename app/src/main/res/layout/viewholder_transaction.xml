@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/tvTransactionId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/Widget.MaterialComponents.TextView"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="T2006" />
+
+    <TextView
+        android:id="@+id/tvFromAmountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/view_holder_fromvalue_title"
+        app:layout_constraintBottom_toTopOf="@id/tvFromAmount"
+        app:layout_constraintStart_toEndOf="@id/tvTransactionId"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFromAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="end"
+        android:textAppearance="@style/Widget.MaterialComponents.TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/vDivider"
+        app:layout_constraintStart_toStartOf="@id/tvFromAmountTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvFromAmountTitle"
+        tools:text="10.00 USD" />
+
+    <TextView
+        android:id="@+id/tvToAmountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/view_holder_tovalue_title"
+        app:layout_constraintBottom_toTopOf="@id/tvToAmount"
+        app:layout_constraintStart_toEndOf="@id/tvFromAmount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvToAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="end"
+        android:textAppearance="@style/Widget.MaterialComponents.TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/vDivider"
+        app:layout_constraintStart_toStartOf="@id/tvToAmountTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvToAmountTitle"
+        tools:text="7.36 EUR" />
+
+    <TextView
+        android:id="@+id/tvConversionRatesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/view_holder_conversionrate_title"
+        app:layout_constraintBottom_toTopOf="@id/tvConversionRate"
+        app:layout_constraintStart_toEndOf="@id/tvToAmount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvConversionRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="end"
+        android:textAppearance="@style/Widget.MaterialComponents.TextView"
+        android:textColor="@color/viewholder_conversion_negative"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/vDivider"
+        app:layout_constraintStart_toStartOf="@id/tvConversionRatesTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvConversionRatesTitle"
+        tools:text="0.736" />
+
+    <ImageView
+        android:id="@+id/ivConversionRateIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:scaleType="fitStart"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/tvConversionRate"
+        app:layout_constraintStart_toEndOf="@id/tvConversionRate"
+        app:layout_constraintTop_toTopOf="@id/tvConversionRate"
+        app:tint="@color/viewholder_conversion_negative"
+        tools:ignore="ContentDescription" />
+
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/viewholder_divider"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
