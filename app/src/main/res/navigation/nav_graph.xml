@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="cat.devsofthecoast.bemobiletechtest.feature.dashboardapp.view.fragment.DashboardFragment"
+        android:label="dashboardFragment"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/actionFromDashboardToDetails"
+            app:destination="@id/movementDetailsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/movementDetailsFragment"
+        android:name="cat.devsofthecoast.bemobiletechtest.feature.movementdetail.view.fragment.MovementDetailsFragment"
+        android:label="movementDetailsFragment"
+        tools:layout="@layout/fragment_movement_details">
+        <argument
+            android:name="details"
+            app:argType="cat.devsofthecoast.bemobiletechtest.feature.movementdetail.view.fragment.args.Details" />
+
+    </fragment>
+</navigation>
