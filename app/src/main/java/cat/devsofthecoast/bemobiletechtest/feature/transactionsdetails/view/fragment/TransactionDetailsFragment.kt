@@ -1,7 +1,9 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.view.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import cat.devsofthecoast.bemobiletechtest.R

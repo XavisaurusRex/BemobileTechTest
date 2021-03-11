@@ -1,8 +1,8 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote
 
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.RemoteConversionRatesMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

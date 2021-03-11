@@ -2,7 +2,6 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.fr
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import cat.devsofthecoast.bemobiletechtest.R
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult

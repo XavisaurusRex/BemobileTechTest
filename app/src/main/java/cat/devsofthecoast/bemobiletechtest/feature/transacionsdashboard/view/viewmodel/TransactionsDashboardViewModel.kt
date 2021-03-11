@@ -2,7 +2,6 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.vi
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.domain.AppDispatchers
@@ -27,12 +26,17 @@ class TransactionsDashboardViewModel @Inject constructor(
         MutableSourceLiveData<AsyncResult<List<TransactionDataWrapper>>>()
     val apiTransaction: LiveData<AsyncResult<List<TransactionDataWrapper>>> get() = _apiTransactions.liveData()
 
-    fun requestMovements(forceRemoteRequests: Boolean = false) = viewModelScope.launch(dispatchers.io) {
-        requestTransactionsToEurUseCase.setForceRemoteRequest(forceRemoteRequests)
-        _apiTransactions.changeSource(requestTransactionsToEurUseCase.execute())
-    }
+    fun requestMovements(forceRemoteRequests: Boolean = false) =
+        viewModelScope.launch(dispatchers.io) {
+            requestTransactionsToEurUseCase.setForceRemoteRequest(forceRemoteRequests)
+            _apiTransactions.changeSource(requestTransactionsToEurUseCase.execute())
+        }
 
-    fun goToTransactionDetails(transactionDetails: TransactionDetails){
-        navigate(TransactionsDashboardFragmentDirections.actionFromDashboardToDetails(transactionDetails))
+    fun goToTransactionDetails(transactionDetails: TransactionDetails) {
+        navigate(
+            TransactionsDashboardFragmentDirections.actionFromDashboardToDetails(
+                transactionDetails
+            )
+        )
     }
 }

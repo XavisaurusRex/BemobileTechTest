@@ -37,8 +37,6 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
 
                 var result: AsyncResult<List<TransactionDataWrapper>> = AsyncResult.loading()
 
-                // TODO: 3/7/21 IMPROVE CONDITIONS
-
                 isAnyError(resultConversionRates, resultTransactions)?.let {
                     result = AsyncResult.error(it)
                 }

@@ -2,7 +2,6 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.ma
 
 import cat.devsofthecoast.bemobiletechtest.common.data.local.model.TransactionDbo
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.LocalTransactionListMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import javax.inject.Inject
 
