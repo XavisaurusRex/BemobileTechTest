@@ -1,9 +1,7 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.view.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import cat.devsofthecoast.bemobiletechtest.R
@@ -11,6 +9,7 @@ import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionDetail
 import dagger.hilt.android.AndroidEntryPoint
 import java.math.RoundingMode
 import java.text.DecimalFormat
+
 
 @AndroidEntryPoint
 class TransactionDetailsFragment : Fragment() {

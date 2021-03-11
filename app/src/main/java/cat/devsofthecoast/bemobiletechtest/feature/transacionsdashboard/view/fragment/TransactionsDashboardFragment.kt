@@ -1,13 +1,11 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import cat.devsofthecoast.bemobiletechtest.R
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionsDashboardBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
@@ -33,6 +31,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
         viewModel.requestMovements()
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -60,5 +59,17 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
                 transactionDetails
             )
         )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.fragmentdashboard_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.mnuRequestFromRemote) {
+             viewModel.requestMovements(true)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

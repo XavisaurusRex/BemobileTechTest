@@ -1,13 +1,7 @@
 package cat.devsofthecoast.bemobiletechtest.common.di.app
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.CollectAndCalculateTransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.ConversionRatesMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.LocalTransactionListMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.CollectAndCalculateTransactionsMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.ConversionRatesMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.LocalTransactionListMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.RemoteTransactionListMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.*
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,8 +17,8 @@ abstract class MapperModule {
 
     @Binds
     abstract fun conversionRatesMapper(
-        ratesMapperImpl: ConversionRatesMapperImpl
-    ): ConversionRatesMapper
+        ratesMapperImpl: RemoteConversionRatesMapperImpl
+    ): RemoteConversionRatesMapper
 
     @Binds
     abstract fun remoteTransactionListMapperImpl(
@@ -35,6 +29,11 @@ abstract class MapperModule {
     abstract fun localTransactionListMapper(
         localTransactionListMapperImpl: LocalTransactionListMapperImpl
     ): LocalTransactionListMapper
+
+    @Binds
+    abstract fun localConversionRatesMapper(
+        localConversionRatesMapper: LocalConversionRatesMapperImpl
+    ): LocalConversionRatesMapper
 
 
 }

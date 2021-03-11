@@ -5,10 +5,12 @@ import cat.devsofthecoast.bemobiletechtest.BuildConfig
 import cat.devsofthecoast.bemobiletechtest.common.extensions.context.readAssetFileToString
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.remote.TransactionsRemoteDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.error.RemoteErrorManagement
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.ws.TransactionsWs
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,7 +22,8 @@ class TransactionsRemoteDataSourceImpl @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val transactionsWs: TransactionsWs,
-    private val remoteTransactionListMapper: RemoteTransactionListMapper
+    private val remoteTransactionListMapper: RemoteTransactionListMapper,
+    private val remoteConversionRatesMapper: RemoteConversionRatesMapper,
 ) : TransactionsRemoteDataSource {
     override suspend fun getTransactions(): List<Transaction> = RemoteErrorManagement.wrap {
         val apiTransactions = if (BuildConfig.MOCK_WS_CALLS) {
@@ -38,9 +41,9 @@ class TransactionsRemoteDataSourceImpl @Inject constructor(
         remoteTransactionListMapper.mapTo(apiTransactions)
     }
 
-    override suspend fun getConversionRates(): List<ApiConversionRate> =
+    override suspend fun getConversionRates(): ConversionRates =
         RemoteErrorManagement.wrap {
-            if (BuildConfig.MOCK_WS_CALLS) {
+            val apiConversionRates = if (BuildConfig.MOCK_WS_CALLS) {
                 val itemType = object : TypeToken<List<ApiConversionRate>>() {}.type
                 Gson().fromJson(
                     context.readAssetFileToString("mock/01_conversionrates.json"),
@@ -51,6 +54,8 @@ class TransactionsRemoteDataSourceImpl @Inject constructor(
 
                 remoteTransactions.body()!!
             }
+
+            remoteConversionRatesMapper.mapTo(apiConversionRates)
         }
 
 

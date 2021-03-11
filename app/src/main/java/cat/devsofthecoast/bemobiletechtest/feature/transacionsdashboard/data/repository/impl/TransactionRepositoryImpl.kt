@@ -2,26 +2,28 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.re
 
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.CacheableRemoteResponse
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.RepositoryResponse
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.ConversionRatesLocalDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.TransactionsLocalDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.remote.TransactionsRemoteDataSource
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.repository.TransactionRepository
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import javax.inject.Inject
 
 class TransactionRepositoryImpl @Inject constructor(
-    private val local: TransactionsLocalDataSource,
+    private val transactionsLocal: TransactionsLocalDataSource,
+    private val conversionRatesLocal: ConversionRatesLocalDataSource,
     private val remote: TransactionsRemoteDataSource
 ) : TransactionRepository {
 
-    override suspend fun getTransactions(): RepositoryResponse<List<Transaction>> {
-        return object : CacheableRemoteResponse<List<Transaction>>() {
+    override suspend fun getTransactions(forceRemoteRequests: Boolean): RepositoryResponse<List<Transaction>> {
+        return object : CacheableRemoteResponse<List<Transaction>>(forceRemoteRequests) {
             override suspend fun loadFromLocal(): List<Transaction>? {
-                return local.getTransactionList()
+                return transactionsLocal.getTransactionList()
             }
 
-            override fun shouldRequestFromRemote(localResponse: List<Transaction>): Boolean {
-                return localResponse.isEmpty()
+            override fun shouldRequestFromRemote(localResponse: List<Transaction>?): Boolean {
+                return forceRemoteRequests || localResponse.isNullOrEmpty()
             }
 
             override suspend fun requestRemoteCall(): List<Transaction> {
@@ -29,29 +31,27 @@ class TransactionRepositoryImpl @Inject constructor(
             }
 
             override suspend fun saveRemoteResponse(remoteResponse: List<Transaction>) {
-                local.saveTransactionList(remoteResponse)
+                transactionsLocal.saveTransactionList(remoteResponse)
             }
         }.build()
     }
 
-    override suspend fun getConverionRates(): RepositoryResponse<List<ApiConversionRate>> {
-        return object : CacheableRemoteResponse<List<ApiConversionRate>>() {
-            override suspend fun loadFromLocal(): List<ApiConversionRate>? {
-                // TODO IMPLEMENT LOCAL DATASOURCE
-                return emptyList()
+    override suspend fun getConverionRates(forceRemoteRequests: Boolean): RepositoryResponse<ConversionRates> {
+        return object : CacheableRemoteResponse<ConversionRates>(forceRemoteRequests) {
+            override suspend fun loadFromLocal(): ConversionRates? {
+                return conversionRatesLocal.getConversionRates()
             }
 
-            override fun shouldRequestFromRemote(localResponse: List<ApiConversionRate>): Boolean {
-                // TODO IMPLEMENT LOCAL DATASOURCE
-                return true
+            override fun shouldRequestFromRemote(localResponse: ConversionRates?): Boolean {
+                return forceRemoteRequests || localResponse == null || localResponse.keys.isNullOrEmpty()
             }
 
-            override suspend fun requestRemoteCall(): List<ApiConversionRate> {
+            override suspend fun requestRemoteCall(): ConversionRates {
                 return remote.getConversionRates()
             }
 
-            override suspend fun saveRemoteResponse(remoteResponse: List<ApiConversionRate>) {
-//                local.saveGames(remoteResponse)
+            override suspend fun saveRemoteResponse(remoteResponse: ConversionRates) {
+                conversionRatesLocal.saveConversionRates(remoteResponse)
             }
         }.build()
     }

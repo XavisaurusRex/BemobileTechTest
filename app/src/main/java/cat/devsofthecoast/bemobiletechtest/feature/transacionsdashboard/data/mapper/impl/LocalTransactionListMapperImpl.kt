@@ -2,6 +2,7 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.ma
 
 import cat.devsofthecoast.bemobiletechtest.common.data.local.model.TransactionDbo
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.LocalTransactionListMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class LocalTransactionListMapperImpl @Inject constructor() : LocalTransactionLis
         }
     }
 
-    override fun mapTo(transactionsDbo: List<TransactionDbo>): List<Transaction> {
-        return transactionsDbo.map {
+    override fun mapTo(from: List<TransactionDbo>): List<Transaction> {
+        return from.map {
             Transaction(
                 it.skuRefCode,
                 it.amount,

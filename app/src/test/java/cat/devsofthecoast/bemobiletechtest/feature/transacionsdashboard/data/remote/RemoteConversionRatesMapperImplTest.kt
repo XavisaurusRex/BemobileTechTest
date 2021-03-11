@@ -1,6 +1,6 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.ConversionRatesMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.RemoteConversionRatesMapperImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import org.junit.Assert
@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class ConversionRatesMapperImplTest {
+class RemoteConversionRatesMapperImplTest {
 
     @Test
     fun `verify that ConversionMapper works correctly in standar situation`() {
@@ -41,7 +41,7 @@ class ConversionRatesMapperImplTest {
                     "CAD" to "EUR" to 0.9359999999999999,
                     "USD" to "EUR" to 0.64584,
                 )
-            ), ConversionRatesMapperImpl().mapTo(apiConversionRates)
+            ), RemoteConversionRatesMapperImpl().mapTo(apiConversionRates)
         )
     }
 
@@ -106,7 +106,7 @@ class ConversionRatesMapperImplTest {
                     "G" to "EUR" to 4.472338799999999,
                     "C" to "EUR" to 3.701922839999999
                 )
-            ), ConversionRatesMapperImpl().mapTo(apiConversionRates)
+            ), RemoteConversionRatesMapperImpl().mapTo(apiConversionRates)
         )
     }
 
@@ -123,7 +123,7 @@ class ConversionRatesMapperImplTest {
         // Then
         Assert.assertEquals(
             ConversionRates(emptyMap()),
-            ConversionRatesMapperImpl().mapTo(apiConversionRates)
+            RemoteConversionRatesMapperImpl().mapTo(apiConversionRates)
         )
     }
 }
