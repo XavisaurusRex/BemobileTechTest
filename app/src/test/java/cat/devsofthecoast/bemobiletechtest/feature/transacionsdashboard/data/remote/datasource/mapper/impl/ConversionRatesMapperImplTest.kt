@@ -29,15 +29,17 @@ class ConversionRatesMapperImplTest {
 
         // Then
         Assert.assertEquals(
-            mapOf(
-                "CAD" to "AUD" to 1.2,
-                "EUR" to "CAD" to 0.83,
-                "CAD" to "USD" to 1.45,
-                "USD" to "CAD" to 0.69,
-                "EUR" to "AUD" to 1.29,
-                "AUD" to "EUR" to 0.78,
-                "CAD" to "EUR" to 0.9359999999999999,
-                "USD" to "EUR" to 0.64584,
+            ConversionRates(
+                mapOf(
+                    "CAD" to "AUD" to 1.2,
+                    "EUR" to "CAD" to 0.83,
+                    "CAD" to "USD" to 1.45,
+                    "USD" to "CAD" to 0.69,
+                    "EUR" to "AUD" to 1.29,
+                    "AUD" to "EUR" to 0.78,
+                    "CAD" to "EUR" to 0.9359999999999999,
+                    "USD" to "EUR" to 0.64584,
+                )
             ), ConversionRatesMapperImpl().mapToBo(apiConversionRates)
         )
     }
@@ -74,33 +76,35 @@ class ConversionRatesMapperImplTest {
 
         // Then
         Assert.assertEquals(
-            mapOf(
-                "A" to "EUR" to 6.9265382586246,
-                "F" to "G" to 1.132,
-                "B" to "C" to 1.091,
-                "J" to "K" to 1.967,
-                "J" to "L" to 1.016,
-                "F" to "H" to 1.861,
-                "B" to "F" to 1.934,
-                "J" to "O" to 1.609,
-                "Z" to "EUR" to 12.599373092438148,
-                "H" to "R" to 1.656,
-                "J" to "EUR" to 2.67094,
-                "F" to "EUR" to 5.062687521599999,
-                "A" to "B" to 1.715,
-                "B" to "EUR" to 4.038797818439999,
-                "G" to "I" to 1.623,
-                "I" to "O" to 1.66,
-                "Z" to "A" to 1.819,
-                "I" to "P" to 1.688,
-                "C" to "J" to 1.386,
-                "A" to "M" to 1.873,
-                "C" to "R" to 1.315,
-                "A" to "Q" to 1.345,
-                "O" to "EUR" to 1.66,
-                "I" to "EUR" to 2.7556,
-                "G" to "EUR" to 4.472338799999999,
-                "C" to "EUR" to 3.701922839999999
+            ConversionRates(
+                mapOf(
+                    "A" to "EUR" to 6.9265382586246,
+                    "F" to "G" to 1.132,
+                    "B" to "C" to 1.091,
+                    "J" to "K" to 1.967,
+                    "J" to "L" to 1.016,
+                    "F" to "H" to 1.861,
+                    "B" to "F" to 1.934,
+                    "J" to "O" to 1.609,
+                    "Z" to "EUR" to 12.599373092438148,
+                    "H" to "R" to 1.656,
+                    "J" to "EUR" to 2.67094,
+                    "F" to "EUR" to 5.062687521599999,
+                    "A" to "B" to 1.715,
+                    "B" to "EUR" to 4.038797818439999,
+                    "G" to "I" to 1.623,
+                    "I" to "O" to 1.66,
+                    "Z" to "A" to 1.819,
+                    "I" to "P" to 1.688,
+                    "C" to "J" to 1.386,
+                    "A" to "M" to 1.873,
+                    "C" to "R" to 1.315,
+                    "A" to "Q" to 1.345,
+                    "O" to "EUR" to 1.66,
+                    "I" to "EUR" to 2.7556,
+                    "G" to "EUR" to 4.472338799999999,
+                    "C" to "EUR" to 3.701922839999999
+                )
             ), ConversionRatesMapperImpl().mapToBo(apiConversionRates)
         )
     }

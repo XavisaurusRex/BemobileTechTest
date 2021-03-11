@@ -3,7 +3,12 @@
     <string name="view_holder_tovalue_title">Total amount</string>
     <string name="view_holder_identifier_title">Transaction ID</string>
     <string name="view_holder_conversionrate_title">Conversion rate</string>
+    <string name="amount_recipient">%1$s %2$s</string>
     <string name="dialog_default_error_message">An unexpected error has occurred</string>
     <string name="dialog_default_error_action">OK</string>
     <string name="dialog_default_loading_message">Loading Transactions?</string>
+    <string name="view_holder_amount_format">###,###.##</string>
+    <string name="view_holder_rate_format">#.######</string>
+
+
 </resources>

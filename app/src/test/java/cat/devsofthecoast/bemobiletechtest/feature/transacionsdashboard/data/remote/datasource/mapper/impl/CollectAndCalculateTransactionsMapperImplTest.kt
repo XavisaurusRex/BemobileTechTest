@@ -1,11 +1,12 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl
 
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.ConversionRatesMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionListMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.model.ConversionRates
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -15,7 +16,8 @@ class CollectAndCalculateTransactionsMapperImplTest {
     fun `verify that given Api Model mapper returns `() {
         // Given
         val collectAndCalculateTransactionsMapperImpl = CollectAndCalculateTransactionsMapperImpl(
-            createMockConversionRatesMapper()
+            createMockConversionRatesMapper(),
+            createMockTransactionListMapper()
         )
         // When
 
@@ -56,8 +58,31 @@ class CollectAndCalculateTransactionsMapperImplTest {
         )
 
         assertEquals(
-            arrayListOf(
-                TransactionDetails()
+            listOf(
+                TransactionDetails(
+                    "B2009",
+                    42.46,
+                    "EUR",
+                    2.0
+                ),
+                TransactionDetails(
+                    "R2008",
+                    35.9,
+                    "EUR",
+                    2.0
+                ),
+                TransactionDetails(
+                    "M2007",
+                    69.14,
+                    "EUR",
+                    2.0
+                ),
+                TransactionDetails(
+                    "T2006",
+                    27.63,
+                    "EUR",
+                    2.0
+                )
             ),
             collectAndCalculateTransactionsMapperImpl.mapToBo(
                 apiConversionRates to apiTransactions
@@ -65,19 +90,54 @@ class CollectAndCalculateTransactionsMapperImplTest {
         )
     }
 
+    private fun createMockTransactionListMapper(): TransactionListMapper {
+        return object : TransactionListMapper {
+            override fun mapToBo(from: List<ApiTransaction>): List<Transaction> {
+                return listOf(
+                    Transaction(
+                        "T2006",
+                        10.00,
+                        "USD"
+                    ),
+                    Transaction(
+                        "M2007", 34.57,
+                        "CAD"
+                    ),
+                    Transaction(
+                        "R2008",
+                        17.95,
+                        "USD"
+                    ),
+                    Transaction(
+                        "T2006",
+                        7.63,
+                        "EUR"
+                    ),
+                    Transaction(
+                        "B2009",
+                        21.23,
+                        "USD"
+                    ),
+                )
+            }
+
+        }
+
+    }
+
     private fun createMockConversionRatesMapper(): ConversionRatesMapper {
         return object : ConversionRatesMapper {
             override fun mapToBo(from: List<ApiConversionRate>): ConversionRates {
-                ConversionRates(
+                return ConversionRates(
                     mapOf(
-                        "CAD" to "AUD" to 1.2,
-                        "EUR" to "CAD" to 0.83,
-                        "CAD" to "USD" to 1.45,
-                        "USD" to "CAD" to 0.69,
-                        "EUR" to "AUD" to 1.29,
-                        "AUD" to "EUR" to 0.78,
-                        "CAD" to "EUR" to 0.9359999999999999
-                        "USD" to "EUR" to 0.64584,
+                        "CAD" to "AUD" to 2.0,
+                        "EUR" to "CAD" to 2.0,
+                        "CAD" to "USD" to 2.0,
+                        "USD" to "CAD" to 2.0,
+                        "EUR" to "AUD" to 2.0,
+                        "AUD" to "EUR" to 2.0,
+                        "CAD" to "EUR" to 2.0,
+                        "USD" to "EUR" to 2.0
                     )
                 )
             }

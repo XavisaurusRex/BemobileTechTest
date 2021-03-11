@@ -1,88 +1,81 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl
 
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.CollectAndCalculateTransactionsMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.ConversionRatesMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionsMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionListMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
  * This should be recallable usecase for reusage in future developments
  */
 class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
-    private val conversionRatesMapper: ConversionRatesMapper
-) : TransactionsMapper {
+    private val conversionRatesMapper: ConversionRatesMapper,
+    private val transactionsMapper: TransactionListMapper
+) : CollectAndCalculateTransactionsMapper {
 
     override fun mapToBo(from: Pair<List<ApiConversionRate>, List<ApiTransaction>>): List<TransactionDetails> {
-        val result = arrayListOf<TransactionDetails>()
 
-        val mapedvalues = hashMapOf<String, Pair<Double, Double>>()
+        val mapedvalues = hashMapOf<String, Pair<BigDecimal, BigDecimal>>()
 
         val conversionRates = conversionRatesMapper.mapToBo(from.first)
+        val transactions = transactionsMapper.mapToBo(from.second)
 
+        transactions.forEach {
 
-        from.second.forEach {
-
-            val existingEntry = mapedvalues[it.skuStockRef]
+            val existingEntry = mapedvalues[it.skuRefCode]
             var conversionRate = conversionRates[it.currency, "EUR"]
             if (it.currency == "EUR") {
-                conversionRate = 1.0
+                conversionRate = "1".toBigDecimal()
             }
             if (conversionRate != null) {
-
-                val entry: Pair<Double, Double>
+                val entry: Pair<BigDecimal, BigDecimal>
                 if (existingEntry == null) {
                     entry = getApiTransactionAmount(
-                        it.amount.toDouble(),
+                        it.amount,
                         conversionRate
                     ) to conversionRate
                 } else {
                     entry = (existingEntry.first + getApiTransactionAmount(
-                        it.amount.toDouble(),
+                        it.amount,
                         conversionRate
                     )) to existingEntry.second * conversionRate
                 }
 
-                mapedvalues[it.skuStockRef] = entry
+                mapedvalues[it.skuRefCode] = entry
             }
             conversionRate?.let { rate ->
-                val entry: Pair<Double, Double>
+                val entry: Pair<BigDecimal, BigDecimal>
                 if (existingEntry == null) {
                     entry = getApiTransactionAmount(
-                        it.amount.toDouble(),
+                        it.amount,
                         rate
                     ) to rate
                 } else {
                     entry = (existingEntry.first + getApiTransactionAmount(
-                        it.amount.toDouble(),
+                        it.amount,
                         rate
                     )) to existingEntry.second * rate
                 }
 
-                mapedvalues[it.skuStockRef] = entry
+                mapedvalues[it.skuRefCode] = entry
             }
         }
 
-        mapedvalues.forEach {
-            result.add(
-                TransactionDetails(
-                    it.key,
-                    it.value.first,
-                    "EUR",
-                    it.value.second
-                )
+        return mapedvalues.map {
+            TransactionDetails(
+                it.key,
+                it.value.first,
+                "EUR",
+                it.value.second
             )
         }
-
-        return result
     }
 
-    private fun getAppConversionRates(first: List<ApiConversionRate>): Map<Pair<String, String>, Double> {
-        return mapOf()
-    }
-
-    private fun getApiTransactionAmount(toDouble: Double, conversionRate: Double?): Double {
+    private fun getApiTransactionAmount(toDouble: BigDecimal, conversionRate: BigDecimal?): BigDecimal {
         // TODO: 3/7/21 DO OP with half round bank
         conversionRate?.let {
             return toDouble * conversionRate

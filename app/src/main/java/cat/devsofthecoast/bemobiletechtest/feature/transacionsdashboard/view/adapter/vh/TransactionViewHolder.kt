@@ -7,6 +7,8 @@ import cat.devsofthecoast.bemobiletechtest.common.adapter.vh.BaseViewHolder
 import cat.devsofthecoast.bemobiletechtest.databinding.ViewholderTransactionBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.listener.TransactionsAdapterListener
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class TransactionViewHolder(parent: ViewGroup) :
     BaseViewHolder<TransactionDataWrapper, TransactionsAdapterListener>(
@@ -23,27 +25,38 @@ class TransactionViewHolder(parent: ViewGroup) :
         listener: TransactionsAdapterListener?,
         position: Int
     ) {
-
         binding.tvTransactionId.text = dataWrapper.item.skuRefCode
 
-        binding.tvToAmount.text =
-            "${String.format("%.2f", dataWrapper.item.amount)} ${dataWrapper.item.amountCurrency}"
+        binding.tvToAmount.text = itemView.resources.getString(
+            R.string.amount_recipient,
+            DecimalFormat(itemView.resources.getString(R.string.view_holder_amount_format))
+                .format(
+                    dataWrapper.item.amount
+                        .setScale(2, RoundingMode.HALF_EVEN)
+                ),
+            dataWrapper.item.currency
+        )
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             val color = context.getColor(
-                if (dataWrapper.item.conversionRate > 1.0) {
-                    binding.ivConversionRateIndicator.setImageLevel(0)
-                    R.color.viewholder_conversion_positive
-                } else {
+                if (dataWrapper.item.conversionRate.compareTo("1".toBigDecimal()) == -1) {
                     binding.ivConversionRateIndicator.setImageLevel(1)
                     R.color.viewholder_conversion_negative
+                } else {
+                    binding.ivConversionRateIndicator.setImageLevel(0)
+                    R.color.viewholder_conversion_positive
                 }
             )
             binding.tvConversionRate.setTextColor(color)
             binding.ivConversionRateIndicator.setColorFilter(color)
         }
 
-        binding.tvConversionRate.text = String.format("%.6f", dataWrapper.item.conversionRate)
+        binding.tvConversionRate.text =
+            DecimalFormat(itemView.resources.getString(R.string.view_holder_rate_format))
+                .format(
+                    dataWrapper.item.conversionRate
+                        .setScale(6, RoundingMode.HALF_EVEN)
+                )
 
         itemView.setOnClickListener {
             listener?.onTransactionClicked(dataWrapper.item)

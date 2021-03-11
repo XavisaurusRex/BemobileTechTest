@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionsMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.CollectAndCalculateTransactionsMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
@@ -18,7 +18,7 @@ import kotlin.coroutines.coroutineContext
 
 class RequestTransactionsToEurUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository,
-    private val transactionsMapper: TransactionsMapper
+    private val collectAndCalculateTransactionsMapper: CollectAndCalculateTransactionsMapper
 ) : RequestTransactionsToEurUseCase {
 
     @InternalCoroutinesApi
@@ -42,7 +42,7 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                     resultTransactions
                 ) { list: List<ApiConversionRate>, list1: List<ApiTransaction> ->
                     result = AsyncResult.success(
-                        transactionsMapper
+                        collectAndCalculateTransactionsMapper
                             .mapToBo(list to list1)
                             .map { TransactionDataWrapper(it) }
                     )
