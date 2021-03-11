@@ -25,10 +25,9 @@ class TransactionViewHolder(parent: ViewGroup) :
     ) {
 
         binding.tvTransactionId.text = dataWrapper.item.skuRefCode
-        binding.tvFromAmount.text =
-            "${dataWrapper.item.fromAmount} ${dataWrapper.item.fromAmountCurrency}"
+
         binding.tvToAmount.text =
-            "${dataWrapper.item.toAmount} ${dataWrapper.item.toAmountCurrency}"
+            "${String.format("%.2f", dataWrapper.item.amount)} ${dataWrapper.item.amountCurrency}"
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             val color = context.getColor(
@@ -44,7 +43,7 @@ class TransactionViewHolder(parent: ViewGroup) :
             binding.ivConversionRateIndicator.setColorFilter(color)
         }
 
-        binding.tvConversionRate.text = dataWrapper.item.conversionRate.toString()
+        binding.tvConversionRate.text = String.format("%.6f", dataWrapper.item.conversionRate)
 
         itemView.setOnClickListener {
             listener?.onTransactionClicked(dataWrapper.item)

@@ -2,8 +2,10 @@ package cat.devsofthecoast.bemobiletechtest.common.di.app
 
 import cat.devsofthecoast.bemobiletechtest.BuildConfig
 import cat.devsofthecoast.bemobiletechtest.common.domain.AppDispatchers
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.ConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.TransactionsMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.CollectAndCalculateTransactionsMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.ConversionRatesMapperImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.remote.TransactionsRemoteDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.remote.impl.TransactionsRemoteDataSourceImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
@@ -37,8 +39,13 @@ abstract class AppModule {
 
     @Binds
     abstract fun transactionMapper(
-        transactionsMapperImpl: TransactionsMapperImpl
+        collectAndCalculateTransactionsMapperImpl: CollectAndCalculateTransactionsMapperImpl
     ): TransactionsMapper
+
+    @Binds
+    abstract fun conversionRatesMapper(
+        ratesMapperImpl: ConversionRatesMapperImpl
+    ): ConversionRatesMapper
 
     companion object {
         @Provides

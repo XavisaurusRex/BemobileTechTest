@@ -2,6 +2,7 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.re
 
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 
-interface TransactionsMapper: ModelMapper<Pair<List<ApiConversionRate>, List<ApiTransaction>>, List<TransactionDataWrapper>>
+interface TransactionsMapper :
+    ModelMapper<Pair<List<ApiConversionRate>, List<ApiTransaction>>, List<TransactionDetails>>

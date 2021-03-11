@@ -8,8 +8,6 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.rem
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Currency
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.usecase.RequestTransactionsToEurUseCase
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -43,7 +41,11 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                     resultConversionRates,
                     resultTransactions
                 ) { list: List<ApiConversionRate>, list1: List<ApiTransaction> ->
-                    result = AsyncResult.success(transactionsMapper.mapToBo(list to list1))
+                    result = AsyncResult.success(
+                        transactionsMapper
+                            .mapToBo(list to list1)
+                            .map { TransactionDataWrapper(it) }
+                    )
                 }
 
                 result
