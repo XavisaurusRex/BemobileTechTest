@@ -1,5 +1,6 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
+        viewModel.requestMovements()
     }
 
     private fun setUpObservers() {

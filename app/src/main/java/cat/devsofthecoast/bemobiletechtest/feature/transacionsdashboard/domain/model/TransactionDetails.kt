@@ -6,9 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TransactionDetails(
     val skuRefCode: String,
-    val fromAmount: Double,
-    val fromAmountCurrency: Currency,
-    val toAmount: Double,
-    val toAmountCurrency: Currency,
+    val amount: Double,
+    val amountCurrency: String,
     val conversionRate: Double
 ) : Parcelable

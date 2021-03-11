@@ -20,10 +20,6 @@ class TransactionsDashboardViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    init {
-        requestMovements()
-    }
-
     private val _apiTransactions =
         MutableSourceLiveData<AsyncResult<List<TransactionDataWrapper>>>()
     val apiTransaction: LiveData<AsyncResult<List<TransactionDataWrapper>>> get() = _apiTransactions.liveData()
