@@ -7,7 +7,7 @@ import androidx.room.Query
 import cat.devsofthecoast.bemobiletechtest.common.data.local.model.TransactionDbo
 
 @Dao
-abstract class TransactionDao {
+abstract class TransactionsDao {
 
     @Query("SELECT * FROM transaction_history")
     abstract suspend fun getAllTransactions(): List<TransactionDbo>

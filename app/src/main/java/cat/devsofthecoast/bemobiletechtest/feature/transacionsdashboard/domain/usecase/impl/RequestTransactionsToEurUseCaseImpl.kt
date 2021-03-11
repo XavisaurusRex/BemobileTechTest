@@ -5,8 +5,8 @@ import androidx.lifecycle.asLiveData
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.CollectAndCalculateTransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.repository.TransactionRepository
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.usecase.RequestTransactionsToEurUseCase
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
@@ -21,11 +21,17 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
     private val collectAndCalculateTransactionsMapper: CollectAndCalculateTransactionsMapper
 ) : RequestTransactionsToEurUseCase {
 
+    var forceRemoteRequests = false
+
+    override fun setForceRemoteRequest(forceRemoteRequests: Boolean) {
+        this.forceRemoteRequests = forceRemoteRequests
+    }
+
     @InternalCoroutinesApi
     override suspend fun execute(): LiveData<AsyncResult<List<TransactionDataWrapper>>> {
-        return repository.getConverionRates().flow()
+        return repository.getConverionRates(forceRemoteRequests).flow()
             .combine(
-                repository.getTransactions().flow()
+                repository.getTransactions(forceRemoteRequests).flow()
             ) { resultConversionRates,
                 resultTransactions ->
 
@@ -40,10 +46,10 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                 areSuccess(
                     resultConversionRates,
                     resultTransactions
-                ) { list: List<ApiConversionRate>, transactions: List<Transaction> ->
+                ) { rates: ConversionRates, transactions: List<Transaction> ->
                     result = AsyncResult.success(
                         collectAndCalculateTransactionsMapper
-                            .mapTo(list to transactions)
+                            .mapTo(rates to transactions)
                             .map { TransactionDataWrapper(it) }
                     )
                 }
@@ -60,9 +66,9 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
     }
 
     private fun areSuccess(
-        arConversionRates: AsyncResult<List<ApiConversionRate>>,
+        arConversionRates: AsyncResult<ConversionRates>,
         arTransactions: AsyncResult<List<Transaction>>,
-        function: (List<ApiConversionRate>, List<Transaction>) -> Unit
+        function: (ConversionRates, List<Transaction>) -> Unit
     ) {
         if (arConversionRates.status == AsyncResult.Status.SUCCESS && arTransactions.status == AsyncResult.Status.SUCCESS) {
             arConversionRates.data?.let { apiConversions ->
@@ -74,7 +80,7 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
     }
 
     private fun isAnyError(
-        conversionRates: AsyncResult<List<ApiConversionRate>>,
+        conversionRates: AsyncResult<ConversionRates>,
         transactions: AsyncResult<List<Transaction>>
     ): AsyncError? {
         return when {

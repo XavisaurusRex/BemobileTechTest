@@ -1,14 +1,14 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.ConversionRatesMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.utils.GraphUtils
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import java.math.BigDecimal
 import javax.inject.Inject
 
 
-class ConversionRatesMapperImpl @Inject constructor() : ConversionRatesMapper {
+class RemoteConversionRatesMapperImpl @Inject constructor() : RemoteConversionRatesMapper {
 
     override fun mapTo(from: List<ApiConversionRate>): ConversionRates {
         val conversionMapper: HashMap<Pair<String, String>, BigDecimal?> = hashMapOf()
@@ -51,4 +51,5 @@ class ConversionRatesMapperImpl @Inject constructor() : ConversionRatesMapper {
     companion object {
         const val EURO_CURRENCY = "EUR"
     }
+
 }

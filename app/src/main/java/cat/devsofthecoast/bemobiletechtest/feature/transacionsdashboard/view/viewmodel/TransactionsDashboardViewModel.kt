@@ -24,7 +24,8 @@ class TransactionsDashboardViewModel @Inject constructor(
         MutableSourceLiveData<AsyncResult<List<TransactionDataWrapper>>>()
     val apiTransaction: LiveData<AsyncResult<List<TransactionDataWrapper>>> get() = _apiTransactions.liveData()
 
-    fun requestMovements() = viewModelScope.launch(dispatchers.io) {
+    fun requestMovements(forceRemoteRequests: Boolean = false) = viewModelScope.launch(dispatchers.io) {
+        requestTransactionsToEurUseCase.setForceRemoteRequest(forceRemoteRequests)
         _apiTransactions.changeSource(requestTransactionsToEurUseCase.execute())
     }
 

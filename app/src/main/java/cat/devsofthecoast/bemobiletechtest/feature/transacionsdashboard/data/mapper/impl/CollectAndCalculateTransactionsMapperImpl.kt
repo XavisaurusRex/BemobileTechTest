@@ -1,10 +1,7 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl
 
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.CollectAndCalculateTransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.ConversionRatesMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiTransaction
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 import java.math.BigDecimal
@@ -13,15 +10,14 @@ import javax.inject.Inject
 /**
  * This should be recallable usecase for reusage in future developments
  */
-class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
-    private val conversionRatesMapper: ConversionRatesMapper
-) : CollectAndCalculateTransactionsMapper {
+class CollectAndCalculateTransactionsMapperImpl @Inject constructor() :
+    CollectAndCalculateTransactionsMapper {
 
-    override fun mapTo(from: Pair<List<ApiConversionRate>, List<Transaction>>): List<TransactionDetails> {
+    override fun mapTo(from: Pair<ConversionRates, List<Transaction>>): List<TransactionDetails> {
 
         val mapedvalues = hashMapOf<String, Pair<BigDecimal, BigDecimal>>()
 
-        val conversionRates = conversionRatesMapper.mapTo(from.first)
+        val conversionRates = from.first
         val transactions = from.second
 
         transactions.forEach {
@@ -75,8 +71,10 @@ class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
         }
     }
 
-    private fun getApiTransactionAmount(toDouble: BigDecimal, conversionRate: BigDecimal?): BigDecimal {
-        // TODO: 3/7/21 DO OP with half round bank
+    private fun getApiTransactionAmount(
+        toDouble: BigDecimal,
+        conversionRate: BigDecimal?
+    ): BigDecimal {
         conversionRate?.let {
             return toDouble * conversionRate
         }

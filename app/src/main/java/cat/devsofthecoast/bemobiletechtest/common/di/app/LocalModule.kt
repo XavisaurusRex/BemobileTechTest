@@ -2,7 +2,9 @@ package cat.devsofthecoast.bemobiletechtest.common.di.app
 
 import android.content.Context
 import cat.devsofthecoast.bemobiletechtest.common.data.local.AppRoomDatabase
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.ConversionRatesLocalDataSource
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.TransactionsLocalDataSource
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.impl.ConversionRatesLocalDataSourceImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.datasource.local.impl.TransactionsLocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -21,6 +23,11 @@ abstract class LocalModule {
         transactionsLocalDataSourceImpl: TransactionsLocalDataSourceImpl
     ): TransactionsLocalDataSource
 
+    @Binds
+    abstract fun conversionRatesLocalDataSource(
+        conversionRatesLocalDataSourceImpl: ConversionRatesLocalDataSourceImpl
+    ): ConversionRatesLocalDataSource
+
     companion object {
 
         @Provides
@@ -31,6 +38,10 @@ abstract class LocalModule {
         @Provides
         fun transactionsDaoProvider(database: AppRoomDatabase) =
             database.transactionsDao()
+
+        @Provides
+        fun conversionRatesDao(database: AppRoomDatabase) =
+            database.conversionRatesDao()
 
     }
 }

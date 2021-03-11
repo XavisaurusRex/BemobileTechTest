@@ -2,12 +2,13 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.da
 
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiTransaction
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 
 interface TransactionsRemoteDataSource {
 
     suspend fun getTransactions(): List<Transaction>
 
-    suspend fun getConversionRates(): List<ApiConversionRate>
+    suspend fun getConversionRates(): ConversionRates
 
 }

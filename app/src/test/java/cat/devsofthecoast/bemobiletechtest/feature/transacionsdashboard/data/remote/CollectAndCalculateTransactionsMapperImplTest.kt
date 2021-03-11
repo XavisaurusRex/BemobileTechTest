@@ -1,6 +1,6 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.ConversionRatesMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.CollectAndCalculateTransactionsMapperImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
@@ -93,7 +93,7 @@ class CollectAndCalculateTransactionsMapperImplTest {
 
     private fun createMockTransactionListMapper(): RemoteTransactionListMapper {
         return object : RemoteTransactionListMapper {
-            override fun mapTo(from: List<ApiTransaction>): List<Transaction> {
+            override fun mapTo(from: Pair<ConversionRates, List<Transaction>>): List<Transaction> {
                 return listOf(
                     Transaction(
                         "T2006",
@@ -126,9 +126,9 @@ class CollectAndCalculateTransactionsMapperImplTest {
 
     }
 
-    private fun createMockConversionRatesMapper(): ConversionRatesMapper {
-        return object : ConversionRatesMapper {
-            override fun mapTo(from: List<ApiConversionRate>): ConversionRates {
+    private fun createMockConversionRatesMapper(): RemoteConversionRatesMapper {
+        return object : RemoteConversionRatesMapper {
+            override fun mapTo(from: Pair<ConversionRates, List<Transaction>>): ConversionRates {
                 return ConversionRates(
                     mapOf(
                         "CAD" to "AUD" to 2.0,

@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.channelFlow
 import java.util.logging.Level
 import java.util.logging.Logger
 
-abstract class CacheableRemoteResponse<ResultType> {
+abstract class CacheableRemoteResponse<ResultType>(
+    private val forceRemoteRequests: Boolean = false
+) {
 
     private val log = Logger.getLogger(CacheableRemoteResponse::class.java.name)
 
@@ -32,7 +34,7 @@ abstract class CacheableRemoteResponse<ResultType> {
                     send(AsyncResult.loading(null))
                     val dbResult = loadFromLocal()
                     val finalValue: AsyncResult<ResultType>
-                    finalValue = if (dbResult == null || shouldRequestFromRemote(dbResult)) {
+                    finalValue = if (dbResult == null || forceRemoteRequests || shouldRequestFromRemote(dbResult)) {
                         try {
                             log.info("Fetch data from network")
                             send(AsyncResult.loading(dbResult)) // Dispatch latest value quickly (UX purpose)
@@ -40,7 +42,8 @@ abstract class CacheableRemoteResponse<ResultType> {
                             AsyncResult.success(networkResponse)
                         } catch (e: Exception) {
                             log.log(Level.WARNING, "An error happened: ", e)
-                            val asyncError = (e as? KoreException)?.asyncError ?: AsyncError.UnknownError("An error happened", e)
+                            val asyncError = (e as? KoreException)?.asyncError
+                                ?: AsyncError.UnknownError("An error happened", e)
                             AsyncResult.error(asyncError, dbResult)
                         }
                     } else {
@@ -66,7 +69,7 @@ abstract class CacheableRemoteResponse<ResultType> {
     //region Abstract methods
     protected abstract suspend fun loadFromLocal(): ResultType?
 
-    protected abstract fun shouldRequestFromRemote(localResponse: ResultType): Boolean
+    protected abstract fun shouldRequestFromRemote(localResponse: ResultType?): Boolean
 
     protected abstract suspend fun requestRemoteCall(): ResultType
 
