@@ -32,13 +32,13 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
         binding = FragmentTransactionsDashboardBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
+        viewModel.requestMovements()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
-        viewModel.requestMovements()
     }
 
     private fun setUpObservers() {
