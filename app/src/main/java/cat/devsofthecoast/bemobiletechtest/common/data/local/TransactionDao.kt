@@ -1,0 +1,22 @@
+package cat.devsofthecoast.bemobiletechtest.common.data.local
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import cat.devsofthecoast.bemobiletechtest.common.data.local.model.TransactionDbo
+
+@Dao
+abstract class TransactionDao {
+
+    @Query("SELECT * FROM transaction_history")
+    abstract suspend fun getAllTransactions(): List<TransactionDbo>
+
+    @Query("DELETE FROM transaction_history")
+    abstract suspend fun clearTable()
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun saveTransaction(transactionDbo: TransactionDbo): Long
+
+}

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.CollectAndCalculateTransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.repository.TransactionRepository
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.CollectAndCalculateTransactionsMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.repository.TransactionRepository
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.usecase.RequestTransactionsToEurUseCase
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -40,10 +40,10 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                 areSuccess(
                     resultConversionRates,
                     resultTransactions
-                ) { list: List<ApiConversionRate>, list1: List<ApiTransaction> ->
+                ) { list: List<ApiConversionRate>, transactions: List<Transaction> ->
                     result = AsyncResult.success(
                         collectAndCalculateTransactionsMapper
-                            .mapToBo(list to list1)
+                            .mapTo(list to transactions)
                             .map { TransactionDataWrapper(it) }
                     )
                 }
@@ -61,8 +61,8 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
 
     private fun areSuccess(
         arConversionRates: AsyncResult<List<ApiConversionRate>>,
-        arTransactions: AsyncResult<List<ApiTransaction>>,
-        function: (conversionRates: List<ApiConversionRate>, transactions: List<ApiTransaction>) -> Unit
+        arTransactions: AsyncResult<List<Transaction>>,
+        function: (List<ApiConversionRate>, List<Transaction>) -> Unit
     ) {
         if (arConversionRates.status == AsyncResult.Status.SUCCESS && arTransactions.status == AsyncResult.Status.SUCCESS) {
             arConversionRates.data?.let { apiConversions ->
@@ -75,7 +75,7 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
 
     private fun isAnyError(
         conversionRates: AsyncResult<List<ApiConversionRate>>,
-        transactions: AsyncResult<List<ApiTransaction>>
+        transactions: AsyncResult<List<Transaction>>
     ): AsyncError? {
         return when {
             conversionRates.status == AsyncResult.Status.ERROR -> conversionRates.error

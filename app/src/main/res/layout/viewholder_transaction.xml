@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintStart_toEndOf="@id/tvToStockIdTitle"
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <TextView
@@ -64,14 +65,14 @@
         app:layout_constraintStart_toStartOf="@id/glIdentifierSection"
         app:layout_constraintEnd_toEndOf="@id/glTotalAmountSection"
         app:layout_constraintTop_toBottomOf="@id/tvToAmountTitle"
-        tools:text="7.36 EUR" />
+        tools:text="8,788.91 EUR" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glTotalAmountSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <TextView
         android:id="@+id/tvConversionRatesTitle"
@@ -86,7 +87,7 @@
 
     <TextView
         android:id="@+id/tvConversionRate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textAppearance="@style/Widget.MaterialComponents.TextView"
@@ -96,16 +97,18 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/glTotalAmountSection"
         app:layout_constraintEnd_toStartOf="@id/ivConversionRateIndicator"
         app:layout_constraintTop_toBottomOf="@id/tvConversionRatesTitle"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="3"
         tools:text="0.736374" />
 
     <ImageView
         android:id="@+id/ivConversionRateIndicator"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:padding="4dp"
         android:layout_marginStart="5dp"
         android:scaleType="fitCenter"
@@ -114,7 +117,7 @@
         app:layout_constraintStart_toEndOf="@id/tvConversionRate"
         app:layout_constraintTop_toTopOf="@id/tvConversionRate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:tint="@color/viewholder_conversion_negative"
         tools:ignore="ContentDescription" />
 

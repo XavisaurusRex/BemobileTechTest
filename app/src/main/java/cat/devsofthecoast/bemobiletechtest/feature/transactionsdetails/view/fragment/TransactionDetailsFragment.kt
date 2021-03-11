@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import cat.devsofthecoast.bemobiletechtest.R
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class TransactionDetailsFragment : Fragment() {
@@ -29,6 +32,16 @@ class TransactionDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
         binding.tvMain.text = args.transactionDetails.skuRefCode
+        binding.tvAmount.text = getString(
+            R.string.amount_recipient,
+            DecimalFormat(getString(R.string.view_holder_amount_format))
+                .format(
+                    args.transactionDetails.amount
+                        .setScale(2, RoundingMode.HALF_EVEN)
+                ),
+            args.transactionDetails.currency
+        )
+        binding.tvSec.text = args.transactionDetails.conversionRate.toEngineeringString()
     }
 
     private fun setUpObservers() {
