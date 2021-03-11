@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import cat.devsofthecoast.bemobiletechtest.R
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
+import cat.devsofthecoast.bemobiletechtest.common.view.BaseFragment
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionsDashboardBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.TransactionsAdapter
@@ -16,11 +16,11 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.vie
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
+class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListener {
 
     lateinit var binding: FragmentTransactionsDashboardBinding
 
-    private val viewModel: TransactionsDashboardViewModel by viewModels()
+    override val viewModel: TransactionsDashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,11 +54,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
     }
 
     override fun onTransactionClicked(transactionDetails: TransactionDetails) {
-        findNavController().navigate(
-            TransactionsDashboardFragmentDirections.actionFromDashboardToDetails(
-                transactionDetails
-            )
-        )
+        viewModel.goToTransactionDetails(transactionDetails)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -68,7 +64,7 @@ class TransactionsDashboardFragment : Fragment(), TransactionsAdapterListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnuRequestFromRemote) {
-             viewModel.requestMovements(true)
+            viewModel.requestMovements(true)
         }
         return super.onOptionsItemSelected(item)
     }
