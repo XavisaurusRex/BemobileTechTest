@@ -25,34 +25,25 @@ class TransactionViewHolder(parent: ViewGroup) :
         listener: TransactionsAdapterListener?,
         position: Int
     ) {
-        binding.tvTransactionId.text = dataWrapper.item.skuRefCode
+        binding.tvTransactionId.text = dataWrapper.transactionId
 
-        binding.tvToAmount.text = itemView.resources.getString(
-            R.string.amount_recipient,
-            DecimalFormat(itemView.resources.getString(R.string.view_holder_amount_format))
-                .format(
-                    dataWrapper.item.amount
-                        .setScale(2, RoundingMode.HALF_EVEN)
-                ),
-            dataWrapper.item.currency
-        )
+        binding.tvToAmount.text = dataWrapper.formattedAmount
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             val color = context.getColor(
-                if (dataWrapper.item.conversionRate.compareTo("1".toBigDecimal()) == -1) {
-                    binding.ivConversionRateIndicator.setImageLevel(1)
-                    R.color.viewholder_conversion_negative
-                } else {
+                if (dataWrapper.conversionRateIsPositive) {
                     binding.ivConversionRateIndicator.setImageLevel(0)
                     R.color.viewholder_conversion_positive
+                } else {
+                    binding.ivConversionRateIndicator.setImageLevel(1)
+                    R.color.viewholder_conversion_negative
                 }
             )
             binding.tvConversionRate.setTextColor(color)
             binding.ivConversionRateIndicator.setColorFilter(color)
         }
 
-
-        binding.tvConversionRate.text = dataWrapper.item.conversionRate.toEngineeringString()
+        binding.tvConversionRate.text = dataWrapper.formattedConversionRate
 
         itemView.setOnClickListener {
             listener?.onTransactionClicked(dataWrapper.item)

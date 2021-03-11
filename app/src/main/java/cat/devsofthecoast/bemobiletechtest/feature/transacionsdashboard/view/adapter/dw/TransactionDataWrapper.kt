@@ -7,7 +7,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class TransactionDataWrapper(
-    val item: TransactionDetails
+    val item: TransactionDetails,
+    val transactionId: String,
+    val formattedAmount: String,
+    val formattedConversionRate: String,
+    val conversionRateIsPositive: Boolean
+
 ) : BaseDataWrapper() {
 
     companion object {
