@@ -2,7 +2,6 @@ package cat.devsofthecoast.bemobiletechtest.common.adapter.vh
 
 import android.content.Context
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import cat.devsofthecoast.bemobiletechtest.common.adapter.dw.BaseDataWrapper
 import cat.devsofthecoast.bemobiletechtest.common.adapter.listener.BaseAdapterListener

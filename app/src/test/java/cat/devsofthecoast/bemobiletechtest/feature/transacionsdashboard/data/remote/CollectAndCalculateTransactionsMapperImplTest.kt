@@ -3,10 +3,10 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.re
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.CollectAndCalculateTransactionsMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiTransaction
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.Transaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
 import org.junit.Assert.assertEquals
 import org.junit.Test

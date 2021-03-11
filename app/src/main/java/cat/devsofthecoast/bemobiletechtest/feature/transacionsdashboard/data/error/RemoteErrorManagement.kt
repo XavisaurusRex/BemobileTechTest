@@ -27,8 +27,12 @@ object RemoteErrorManagement {
         log.log(Level.INFO, "RemoteErrorManagement", throwable)
         return when (throwable) {
             is HttpException -> processRetrofitError(throwable)
-            is UnknownHostException -> AsyncError.ConnectionError(throwable.message ?: "Connection error")
-            is JsonParseException -> AsyncError.DataParseError(throwable.message ?: "Parsing response error")
+            is UnknownHostException -> AsyncError.ConnectionError(
+                throwable.message ?: "Connection error"
+            )
+            is JsonParseException -> AsyncError.DataParseError(
+                throwable.message ?: "Parsing response error"
+            )
             else -> AsyncError.UnknownError(throwable.message ?: "Unknown error", throwable)
         }
     }

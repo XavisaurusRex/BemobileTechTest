@@ -22,7 +22,7 @@ class RemoteConversionRatesMapperImpl @Inject constructor() : RemoteConversionRa
 
 
     private fun generateRemainingRelations(currentRelations: HashMap<Pair<String, String>, BigDecimal?>): ConversionRates {
-        // TODO: 3/10/21 ACTUALLY WE ONLY NEED TO CALCULATE EURO REMAINING RELATIONS
+        // ACTUALLY WE ONLY NEED TO CALCULATE EURO REMAINING RELATIONS
 
         val graphOfConversion = GraphUtils.Graph(currentRelations.keys.toList())
 

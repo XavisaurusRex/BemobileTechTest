@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class TransactionDataWrapper(
     val item: TransactionDetails
-    ) : BaseDataWrapper() {
+) : BaseDataWrapper() {
 
     companion object {
         const val VIEW_TYPE_TRANSACTION = 135

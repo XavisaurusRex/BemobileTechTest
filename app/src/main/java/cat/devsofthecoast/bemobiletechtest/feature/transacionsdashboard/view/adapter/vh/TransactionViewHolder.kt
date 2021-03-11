@@ -1,6 +1,5 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.vh
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import cat.devsofthecoast.bemobiletechtest.R

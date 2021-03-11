@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import cat.devsofthecoast.bemobiletechtest.common.data.local.model.ConversionRateDbo
-import cat.devsofthecoast.bemobiletechtest.common.data.local.model.TransactionDbo
 
 @Dao
 abstract class ConversionRatesDao {

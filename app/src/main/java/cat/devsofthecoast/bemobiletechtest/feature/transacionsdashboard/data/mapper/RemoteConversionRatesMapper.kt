@@ -1,6 +1,6 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.model.ApiConversionRate
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.ConversionRates
 
 interface RemoteConversionRatesMapper : ModelMapper<List<ApiConversionRate>, ConversionRates>
