@@ -86,7 +86,7 @@
 
     <TextView
         android:id="@+id/tvConversionRate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textAppearance="@style/Widget.MaterialComponents.TextView"
@@ -99,13 +99,13 @@
         app:layout_constraintStart_toStartOf="@id/glTotalAmountSection"
         app:layout_constraintEnd_toStartOf="@id/ivConversionRateIndicator"
         app:layout_constraintTop_toBottomOf="@id/tvConversionRatesTitle"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="3"
         tools:text="0.736374" />
 
     <ImageView
         android:id="@+id/ivConversionRateIndicator"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:padding="4dp"
         android:layout_marginStart="5dp"
         android:scaleType="fitCenter"
@@ -114,7 +114,7 @@
         app:layout_constraintStart_toEndOf="@id/tvConversionRate"
         app:layout_constraintTop_toTopOf="@id/tvConversionRate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:tint="@color/viewholder_conversion_negative"
         tools:ignore="ContentDescription" />
 

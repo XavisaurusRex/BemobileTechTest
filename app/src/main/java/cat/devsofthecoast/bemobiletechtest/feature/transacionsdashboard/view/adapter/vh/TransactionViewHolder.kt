@@ -1,5 +1,6 @@
 package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.vh
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import cat.devsofthecoast.bemobiletechtest.R
@@ -51,12 +52,8 @@ class TransactionViewHolder(parent: ViewGroup) :
             binding.ivConversionRateIndicator.setColorFilter(color)
         }
 
-        binding.tvConversionRate.text =
-            DecimalFormat(itemView.resources.getString(R.string.view_holder_rate_format))
-                .format(
-                    dataWrapper.item.conversionRate
-                        .setScale(6, RoundingMode.HALF_EVEN)
-                )
+        Log.d("TransactionVH", "${dataWrapper.item.skuRefCode} -> ${dataWrapper.item.amount} -> ${dataWrapper.item.conversionRate} \n")
+        binding.tvConversionRate.text = dataWrapper.item.conversionRate.toString().substring(0 )
 
         itemView.setOnClickListener {
             listener?.onTransactionClicked(dataWrapper.item)

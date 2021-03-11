@@ -1,27 +1,32 @@
 [
   {
-    "sku": "T2006",
-    "amount": "10.00",
-    "currency": "USD"
+    "from": "CAD",
+    "to": "AUD",
+    "rate": "1.07"
   },
   {
-    "sku": "M2007",
-    "amount": "34.57",
-    "currency": "CAD"
+    "from": "AUD",
+    "to": "CAD",
+    "rate": "0.93"
   },
   {
-    "sku": "R2008",
-    "amount": "17.95",
-    "currency": "USD"
+    "from": "CAD",
+    "to": "USD",
+    "rate": "1.32"
   },
   {
-    "sku": "T2006",
-    "amount": "7.63",
-    "currency": "EUR"
+    "from": "USD",
+    "to": "CAD",
+    "rate": "0.76"
   },
   {
-    "sku": "B2009",
-    "amount": "21.23",
-    "currency": "USD"
+    "from": "AUD",
+    "to": "EUR",
+    "rate": "0.96"
+  },
+  {
+    "from": "EUR",
+    "to": "AUD",
+    "rate": "1.04"
   }
 ]

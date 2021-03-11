@@ -1,11 +1,13 @@
 package cat.devsofthecoast.bemobiletechtest.common.di.app
 
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.CollectAndCalculateTransactionsMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.ConversionRatesMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.TransactionListMapper
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.CollectAndCalculateTransactionsMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.ConversionRatesMapperImpl
-import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.impl.TransactionListMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.CollectAndCalculateTransactionsMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.ConversionRatesMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.LocalTransactionListMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.RemoteTransactionListMapper
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.CollectAndCalculateTransactionsMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.ConversionRatesMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.LocalTransactionListMapperImpl
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.mapper.impl.RemoteTransactionListMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,7 +27,14 @@ abstract class MapperModule {
     ): ConversionRatesMapper
 
     @Binds
-    abstract fun transactionListMapper(
-        transactionListMapperImpl: TransactionListMapperImpl
-    ): TransactionListMapper
+    abstract fun remoteTransactionListMapperImpl(
+        remoteTransactionListMapperImpl: RemoteTransactionListMapperImpl
+    ): RemoteTransactionListMapper
+
+    @Binds
+    abstract fun localTransactionListMapper(
+        localTransactionListMapperImpl: LocalTransactionListMapperImpl
+    ): LocalTransactionListMapper
+
+
 }
