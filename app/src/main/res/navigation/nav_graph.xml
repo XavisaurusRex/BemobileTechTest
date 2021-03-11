@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/transactionDashboardFragment">
+
+    <fragment
+        android:id="@+id/transactionDashboardFragment"
+        android:name="cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.fragment.TransactionsDashboardFragment"
+        android:label="transactionDashboardFragment"
+        tools:layout="@layout/fragment_transactions_dashboard">
+        <action
+            android:id="@+id/actionFromDashboardToDetails"
+            app:destination="@id/transactionDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/transactionDetailsFragment"
+        android:name="cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.view.fragment.TransactionDetailsFragment"
+        android:label="transactionDetailsFragment"
+        tools:layout="@layout/fragment_transaction_details">
+        <argument
+            android:name="transactionDetails"
+            app:argType="cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails" />
+
+    </fragment>
+</navigation>
