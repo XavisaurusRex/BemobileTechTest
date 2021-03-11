@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintStart_toEndOf="@id/tvToStockIdTitle"
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <TextView
@@ -64,14 +65,14 @@
         app:layout_constraintStart_toStartOf="@id/glIdentifierSection"
         app:layout_constraintEnd_toEndOf="@id/glTotalAmountSection"
         app:layout_constraintTop_toBottomOf="@id/tvToAmountTitle"
-        tools:text="7.36 EUR" />
+        tools:text="8,788.91 EUR" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glTotalAmountSection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <TextView
         android:id="@+id/tvConversionRatesTitle"
@@ -96,6 +97,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/glTotalAmountSection"
         app:layout_constraintEnd_toStartOf="@id/ivConversionRateIndicator"
         app:layout_constraintTop_toBottomOf="@id/tvConversionRatesTitle"

@@ -52,8 +52,8 @@ class TransactionViewHolder(parent: ViewGroup) :
             binding.ivConversionRateIndicator.setColorFilter(color)
         }
 
-        Log.d("TransactionVH", "${dataWrapper.item.skuRefCode} -> ${dataWrapper.item.amount} -> ${dataWrapper.item.conversionRate} \n")
-        binding.tvConversionRate.text = dataWrapper.item.conversionRate.toString().substring(0 )
+
+        binding.tvConversionRate.text = dataWrapper.item.conversionRate.toEngineeringString()
 
         itemView.setOnClickListener {
             listener?.onTransactionClicked(dataWrapper.item)

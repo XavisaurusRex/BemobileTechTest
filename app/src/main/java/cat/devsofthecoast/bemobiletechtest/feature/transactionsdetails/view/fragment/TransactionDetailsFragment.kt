@@ -29,6 +29,7 @@ class TransactionDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
         binding.tvMain.text = args.transactionDetails.skuRefCode
+        binding.tvSec.text = args.transactionDetails.conversionRate.toEngineeringString()
     }
 
     private fun setUpObservers() {
