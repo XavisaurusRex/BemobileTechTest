@@ -48,7 +48,6 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                     result = AsyncResult.success(
                         collectAndCalculateTransactionsMapper
                             .mapTo(rates to transactions)
-                            .map { TransactionDataWrapper(it) }
                     )
                 }
 
