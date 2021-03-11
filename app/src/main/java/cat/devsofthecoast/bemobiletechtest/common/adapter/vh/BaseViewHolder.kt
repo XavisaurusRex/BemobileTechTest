@@ -16,6 +16,4 @@ abstract class BaseViewHolder<DW : BaseDataWrapper, LT : BaseAdapterListener<DW>
 
     open fun onViewAttachedToWindow(listener: LT?) {}
 
-    protected fun getString(@StringRes stringId: Int): String = itemView.context.getString(stringId)
-
 }

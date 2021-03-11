@@ -6,6 +6,7 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.rem
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiTransaction
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -18,7 +19,7 @@ class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
 
     override fun mapToBo(from: Pair<List<ApiConversionRate>, List<ApiTransaction>>): List<TransactionDetails> {
 
-        val mapedvalues = hashMapOf<String, Pair<Double, Double>>()
+        val mapedvalues = hashMapOf<String, Pair<BigDecimal, BigDecimal>>()
 
         val conversionRates = conversionRatesMapper.mapToBo(from.first)
         val transactions = transactionsMapper.mapToBo(from.second)
@@ -28,11 +29,10 @@ class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
             val existingEntry = mapedvalues[it.skuRefCode]
             var conversionRate = conversionRates[it.currency, "EUR"]
             if (it.currency == "EUR") {
-                conversionRate = 1.0
+                conversionRate = "1".toBigDecimal()
             }
             if (conversionRate != null) {
-
-                val entry: Pair<Double, Double>
+                val entry: Pair<BigDecimal, BigDecimal>
                 if (existingEntry == null) {
                     entry = getApiTransactionAmount(
                         it.amount,
@@ -48,7 +48,7 @@ class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
                 mapedvalues[it.skuRefCode] = entry
             }
             conversionRate?.let { rate ->
-                val entry: Pair<Double, Double>
+                val entry: Pair<BigDecimal, BigDecimal>
                 if (existingEntry == null) {
                     entry = getApiTransactionAmount(
                         it.amount,
@@ -75,7 +75,7 @@ class CollectAndCalculateTransactionsMapperImpl @Inject constructor(
         }
     }
 
-    private fun getApiTransactionAmount(toDouble: Double, conversionRate: Double?): Double {
+    private fun getApiTransactionAmount(toDouble: BigDecimal, conversionRate: BigDecimal?): BigDecimal {
         // TODO: 3/7/21 DO OP with half round bank
         conversionRate?.let {
             return toDouble * conversionRate

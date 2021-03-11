@@ -3,23 +3,24 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.re
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.ConversionRatesMapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.datasource.mapper.model.ConversionRates
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.remote.model.ApiConversionRate
+import java.math.BigDecimal
 import javax.inject.Inject
 
 
 class ConversionRatesMapperImpl @Inject constructor() : ConversionRatesMapper {
 
     override fun mapToBo(from: List<ApiConversionRate>): ConversionRates {
-        val conversionMapper: HashMap<Pair<String, String>, Double?> = hashMapOf()
+        val conversionMapper: HashMap<Pair<String, String>, BigDecimal?> = hashMapOf()
 
         from.forEach {
-            conversionMapper[it.fromCurrency to it.toCurrency] = it.rate.toDouble()
+            conversionMapper[it.fromCurrency to it.toCurrency] = it.rate.toBigDecimal()
         }
 
         return generateRemainingRelations(conversionMapper)
     }
 
 
-    private fun generateRemainingRelations(currentRelations: HashMap<Pair<String, String>, Double?>): ConversionRates {
+    private fun generateRemainingRelations(currentRelations: HashMap<Pair<String, String>, BigDecimal?>): ConversionRates {
         // TODO: 3/10/21 ACTUALLY WE ONLY NEED TO CALCULATE EURO REMAINING RELATIONS
 
         val graphOfConversion = GraphUtils.Graph(currentRelations.keys.toList())
@@ -34,7 +35,7 @@ class ConversionRatesMapperImpl @Inject constructor() : ConversionRatesMapper {
                 conversionCandidate,
                 EURO_CURRENCY
             )?.let { pathToEur ->
-                var calculedRate = 1.0
+                var calculedRate = "1".toBigDecimal()
                 pathToEur.forEach {
                     calculedRate *= currentRelations[it]!!
                 }

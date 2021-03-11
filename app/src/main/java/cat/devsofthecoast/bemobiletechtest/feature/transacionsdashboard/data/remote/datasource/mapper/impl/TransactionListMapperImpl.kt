@@ -7,10 +7,12 @@ import javax.inject.Inject
 
 class TransactionListMapperImpl @Inject constructor() : TransactionListMapper {
     override fun mapToBo(from: List<ApiTransaction>): List<Transaction> {
+
         return from.map {
+            it.amount.toBigDecimal()
             Transaction(
                 it.skuStockRef,
-                it.amount.toDouble(),
+                it.amount.toBigDecimal(),
                 it.currency
             )
         }
