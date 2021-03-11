@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:maxLevel="0"
+        android:drawable="@drawable/ic_upper_right_arrow" />
+    <item android:maxLevel="1">
+        <rotate
+            android:fromDegrees="90"
+            android:drawable="@drawable/ic_upper_right_arrow"
+            android:pivotX="50%"
+            android:pivotY="50%" />
+    </item>
+</level-list>
