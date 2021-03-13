@@ -2,6 +2,7 @@ package cat.devsofthecoast.bemobiletechtest.common.data.remote
 
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.KoreException
+import cat.devsofthecoast.bemobiletechtest.common.extensions.allscopes.logDebug
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -37,18 +38,18 @@ abstract class CacheableRemoteResponse<ResultType>(
                             )
                         ) {
                             try {
-                                log.info("Fetch data from network")
+                                logDebug("Fetch data from network")
                                 send(AsyncResult.loading(dbResult)) // Dispatch latest value quickly (UX purpose)
                                 val networkResponse = fetchFromNetwork()
                                 AsyncResult.success(networkResponse)
                             } catch (e: Exception) {
-                                log.log(Level.WARNING, "An error happened: ", e)
+                                logDebug( "An error happened: ", e)
                                 val asyncError = (e as? KoreException)?.asyncError
                                     ?: AsyncError.UnknownError("An error happened", e)
                                 AsyncResult.error(asyncError, dbResult)
                             }
                         } else {
-                            log.info("Return data from local database")
+                            logDebug("Return data from local database")
                             AsyncResult.success(dbResult)
                         }
                     send(finalValue)
@@ -61,7 +62,7 @@ abstract class CacheableRemoteResponse<ResultType>(
 
     private suspend fun fetchFromNetwork(): ResultType {
         val networkResponse = requestRemoteCall()
-        log.info("Data fetched from network")
+        logDebug("Data fetched from network")
         saveRemoteResponse(networkResponse)
         return networkResponse
     }

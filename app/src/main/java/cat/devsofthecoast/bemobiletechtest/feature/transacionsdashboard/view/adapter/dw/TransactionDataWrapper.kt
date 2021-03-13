@@ -12,7 +12,6 @@ class TransactionDataWrapper(
     val formattedAmount: String,
     val formattedConversionRate: String,
     val conversionRateIsPositive: Boolean
-
 ) : BaseDataWrapper() {
 
     companion object {
