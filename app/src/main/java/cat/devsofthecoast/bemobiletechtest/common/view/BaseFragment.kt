@@ -16,12 +16,18 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun setUpBaseObservers() {
+        viewModel.loading.observe(::getLifecycle) { showLoading(it) }
+        viewModel.error.observe(::getLifecycle) { showError(it) }
         viewModel.navigation.observe(::getLifecycle) { event ->
             event?.getContentIfNotHandled()?.let {
                 navigate(it)
             }
         }
     }
+
+    abstract fun showLoading(shouldShow: Boolean?)
+
+    abstract fun showError(shouldShow: Boolean?)
 
     private fun navigate(order: NavigationOrder) {
         when (order) {

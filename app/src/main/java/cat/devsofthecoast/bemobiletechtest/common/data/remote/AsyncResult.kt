@@ -35,8 +35,8 @@ data class AsyncResult<out T>(val status: Status, val data: T?, val error: Async
     }
 
     enum class Status {
-        LOADING,
         SUCCESS,
+        LOADING,
         ERROR
     }
 }

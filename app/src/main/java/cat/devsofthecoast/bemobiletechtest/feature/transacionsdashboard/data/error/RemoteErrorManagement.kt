@@ -2,6 +2,7 @@ package cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.er
 
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.AsyncError
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.error.KoreException
+import cat.devsofthecoast.bemobiletechtest.common.extensions.allscopes.logDebug
 import com.google.gson.JsonParseException
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -24,7 +25,7 @@ object RemoteErrorManagement {
     }
 
     fun processError(throwable: Throwable): AsyncError {
-        log.log(Level.INFO, "RemoteErrorManagement", throwable)
+        logDebug("RemoteErrorManagement", throwable)
         return when (throwable) {
             is HttpException -> processRetrofitError(throwable)
             is UnknownHostException -> AsyncError.ConnectionError(

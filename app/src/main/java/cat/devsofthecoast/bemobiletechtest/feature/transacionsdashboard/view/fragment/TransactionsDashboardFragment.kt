@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.viewModels
 import cat.devsofthecoast.bemobiletechtest.R
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
+import cat.devsofthecoast.bemobiletechtest.common.extensions.view.setVisible
 import cat.devsofthecoast.bemobiletechtest.common.view.BaseFragment
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionsDashboardBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
@@ -20,16 +21,12 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
     lateinit var binding: FragmentTransactionsDashboardBinding
 
     override val viewModel: TransactionsDashboardViewModel by viewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTransactionsDashboardBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = viewModel
-        viewModel.requestMovements()
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -37,23 +34,6 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
-    }
-
-    private fun setUpObservers() {
-        viewModel.apiTransaction.observe(::getLifecycle) { observeTransactions(it) }
-    }
-
-    private fun observeTransactions(transactionsResult: AsyncResult<List<TransactionDataWrapper>>) {
-        val transactions =
-            transactionsResult.data.takeIf { transactionsResult.status == AsyncResult.Status.SUCCESS }
-        transactions?.let { dataWrappers ->
-            binding.rcyTransactions.adapter = TransactionsAdapter(this, dataWrappers)
-
-        }
-    }
-
-    override fun onTransactionClicked(transactionDetails: TransactionDetails) {
-        viewModel.goToTransactionDetails(transactionDetails)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,5 +46,27 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
             viewModel.requestMovements(true)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setUpObservers() {
+        viewModel.transactions.observe(::getLifecycle) { onGetTransactions(it) }
+    }
+
+    private fun onGetTransactions(transactionsResult: List<TransactionDataWrapper>?) {
+        binding.rcyTransactions.setVisible(transactionsResult != null) {
+            binding.rcyTransactions.adapter = TransactionsAdapter(this, transactionsResult!!)
+        }
+    }
+
+    override fun showLoading(shouldShow: Boolean?) {
+        binding.llLoadingWrapper.setVisible(shouldShow)
+    }
+
+    override fun showError(shouldShow: Boolean?) {
+        binding.llErrorWrapper.setVisible(shouldShow)
+    }
+
+    override fun onTransactionClicked(transactionDetails: TransactionDetails) {
+        viewModel.goToTransactionDetails(transactionDetails)
     }
 }
