@@ -1,8 +1,8 @@
 package cat.devsofthecoast.bemobiletechtest.common.domain.usecase
 
-import androidx.lifecycle.LiveData
 import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
+import kotlinx.coroutines.flow.Flow
 
 interface BaseUseCase<T> {
-    suspend fun execute(): LiveData<AsyncResult<T>>
+    suspend fun execute(): Flow<AsyncResult<T>>
 }

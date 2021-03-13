@@ -2,8 +2,8 @@ package cat.devsofthecoast.bemobiletechtest.common.extensions.view
 
 import android.view.View
 
-fun View?.setVisible(condition: Boolean, doWhenVisible: () -> Unit = {}) {
-    this?.visibility = if (condition) {
+fun View?.setVisible(condition: Boolean?, doWhenVisible: () -> Unit = {}) {
+    this?.visibility = if (condition == true) {
         doWhenVisible()
         View.VISIBLE
     } else {
@@ -11,8 +11,8 @@ fun View?.setVisible(condition: Boolean, doWhenVisible: () -> Unit = {}) {
     }
 }
 
-fun View?.setInvisible(condition: Boolean) {
-    this?.visibility = if (condition) {
+fun View?.setInvisible(condition: Boolean?) {
+    this?.visibility = if (condition == true) {
         View.INVISIBLE
     } else {
         View.VISIBLE
