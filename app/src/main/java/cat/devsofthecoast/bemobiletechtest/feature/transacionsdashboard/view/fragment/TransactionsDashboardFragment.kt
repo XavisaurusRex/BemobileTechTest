@@ -27,6 +27,8 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTransactionsDashboardBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -56,14 +58,6 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
         binding.rcyTransactions.setVisible(transactionsResult != null) {
             binding.rcyTransactions.adapter = TransactionsAdapter(this, transactionsResult!!)
         }
-    }
-
-    override fun showLoading(shouldShow: Boolean?) {
-        binding.llLoadingWrapper.setVisible(shouldShow)
-    }
-
-    override fun showError(shouldShow: Boolean?) {
-        binding.llErrorWrapper.setVisible(shouldShow)
     }
 
     override fun onTransactionClicked(transactionDetails: TransactionDetails) {

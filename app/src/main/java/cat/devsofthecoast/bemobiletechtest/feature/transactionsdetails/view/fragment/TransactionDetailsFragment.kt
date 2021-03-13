@@ -33,7 +33,7 @@ class TransactionDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObservers()
-        binding.tvMain.text = args.transactionDetails.skuRefCode
+        binding.tvIdentifier.text = args.transactionDetails.skuRefCode
         binding.tvAmount.text = getString(
             R.string.amount_recipient,
             DecimalFormat(getString(R.string.view_holder_amount_format))
