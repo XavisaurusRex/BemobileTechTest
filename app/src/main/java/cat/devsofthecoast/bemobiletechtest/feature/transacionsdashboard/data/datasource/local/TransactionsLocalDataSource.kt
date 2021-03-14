@@ -5,5 +5,7 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.m
 interface TransactionsLocalDataSource {
     suspend fun getTransactionList(): List<Transaction>
 
+    suspend fun getTransactionDetailsForProduct(skuRefCode: String): List<Transaction>
+
     suspend fun saveTransactionList(transactions: List<Transaction>)
 }

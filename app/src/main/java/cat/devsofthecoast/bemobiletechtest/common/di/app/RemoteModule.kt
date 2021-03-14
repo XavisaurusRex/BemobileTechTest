@@ -5,6 +5,8 @@ import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.dat
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.repository.TransactionRepository
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.repository.impl.TransactionRepositoryImpl
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.data.ws.TransactionsWs
+import cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.data.repository.TransactionDetailsRepository
+import cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.data.repository.impl.TransactionDetailsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,6 +27,11 @@ abstract class RemoteModule {
     abstract fun transactionsRemoteDataSource(
         transactionsRemoteDataSourceImpl: TransactionsRemoteDataSourceImpl
     ): TransactionsRemoteDataSource
+
+    @Binds
+    abstract fun transactionDetailsRepository(
+        transactionDetailsRepositoryImpl: TransactionDetailsRepositoryImpl
+    ): TransactionDetailsRepository
 
     companion object {
         @Provides
