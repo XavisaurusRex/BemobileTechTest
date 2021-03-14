@@ -24,7 +24,6 @@
             android:overScrollMode="never"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".MainActivity"
             tools:listitem="@layout/viewholder_transaction" />
 
         <!-- LOADING -->

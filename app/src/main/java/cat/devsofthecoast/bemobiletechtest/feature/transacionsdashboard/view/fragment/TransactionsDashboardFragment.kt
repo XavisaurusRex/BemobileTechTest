@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
 import cat.devsofthecoast.bemobiletechtest.R
-import cat.devsofthecoast.bemobiletechtest.common.data.remote.AsyncResult
 import cat.devsofthecoast.bemobiletechtest.common.extensions.view.setVisible
 import cat.devsofthecoast.bemobiletechtest.common.view.BaseFragment
 import cat.devsofthecoast.bemobiletechtest.databinding.FragmentTransactionsDashboardBinding
@@ -21,6 +20,7 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
     lateinit var binding: FragmentTransactionsDashboardBinding
 
     override val viewModel: TransactionsDashboardViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +55,7 @@ class TransactionsDashboardFragment : BaseFragment(), TransactionsAdapterListene
     }
 
     private fun onGetTransactions(transactionsResult: List<TransactionDataWrapper>?) {
-        binding.rcyTransactions.setVisible(transactionsResult != null) {
+        binding.rcyTransactions.setVisible(transactionsResult.isNullOrEmpty().not()) {
             binding.rcyTransactions.adapter = TransactionsAdapter(this, transactionsResult!!)
         }
     }
