@@ -17,6 +17,12 @@ class TransactionsLocalDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun getTransactionDetailsForProduct(skuRefCode: String): List<Transaction> {
+        return localTransactionListMapper.mapTo(
+            transactionsDao.getTransactionsForProduct(skuRefCode)
+        )
+    }
+
     override suspend fun saveTransactionList(transactions: List<Transaction>) {
         transactionsDao.clearTable()
         localTransactionListMapper

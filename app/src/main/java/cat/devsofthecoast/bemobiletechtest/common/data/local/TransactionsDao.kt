@@ -12,6 +12,9 @@ abstract class TransactionsDao {
     @Query("SELECT * FROM transaction_history")
     abstract suspend fun getAllTransactions(): List<TransactionDbo>
 
+    @Query("SELECT * FROM transaction_history WHERE skuRefCode = :skuRefId")
+    abstract suspend fun getTransactionsForProduct(skuRefId: String): List<TransactionDbo>
+
     @Query("DELETE FROM transaction_history")
     abstract suspend fun clearTable()
 

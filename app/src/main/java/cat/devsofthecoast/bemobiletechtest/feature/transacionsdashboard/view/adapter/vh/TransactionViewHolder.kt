@@ -7,8 +7,6 @@ import cat.devsofthecoast.bemobiletechtest.common.adapter.vh.BaseViewHolder
 import cat.devsofthecoast.bemobiletechtest.databinding.ViewholderTransactionBinding
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.dw.TransactionDataWrapper
 import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.adapter.listener.TransactionsAdapterListener
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class TransactionViewHolder(parent: ViewGroup) :
     BaseViewHolder<TransactionDataWrapper, TransactionsAdapterListener>(

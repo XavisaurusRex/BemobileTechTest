@@ -42,7 +42,7 @@ class RequestTransactionsToEurUseCaseImpl @Inject constructor(
                     )
                 } else if (resultConversionRates.status == AsyncResult.Status.ERROR) {
                     AsyncResult.error(resultConversionRates.error!!)
-                } else if (resultTransactions.status == AsyncResult.Status.SUCCESS) {
+                } else if (resultTransactions.status == AsyncResult.Status.ERROR) {
                     AsyncResult.error(resultTransactions.error!!)
                 } else {
                     AsyncResult.loading()
