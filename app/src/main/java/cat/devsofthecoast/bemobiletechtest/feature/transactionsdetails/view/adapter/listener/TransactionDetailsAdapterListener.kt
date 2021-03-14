@@ -1,0 +1,7 @@
+package cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.view.adapter.listener
+
+import cat.devsofthecoast.bemobiletechtest.common.adapter.listener.BaseAdapterListener
+import cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.domain.model.TransactionDetails
+import cat.devsofthecoast.bemobiletechtest.feature.transactionsdetails.view.adapter.dw.TransactionDetailsDataWrapper
+
+interface TransactionDetailsAdapterListener : BaseAdapterListener<TransactionDetailsDataWrapper>

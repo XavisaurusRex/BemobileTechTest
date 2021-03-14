@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="cat.devsofthecoast.bemobiletechtest.feature.transacionsdashboard.view.viewmodel.TransactionsDashboardViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +24,6 @@
             android:overScrollMode="never"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".MainActivity"
             tools:listitem="@layout/viewholder_transaction" />
 
         <!-- LOADING -->
@@ -26,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            app:showWhen="@{viewmodel.loading}"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -69,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            app:showWhen="@{viewmodel.error}"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView

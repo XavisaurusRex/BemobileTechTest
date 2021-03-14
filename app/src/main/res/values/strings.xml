@@ -9,5 +9,6 @@
     <string name="dialog_default_loading_message">Loading Transactions</string>
     <string name="view_holder_amount_format">###,###.##</string>
     <string name="menu_action_request_from_remote">Force request data from remote</string>
+    <string name="fragment_details_titles">Show all transactions for %1$s</string>
 
 </resources>
